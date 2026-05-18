@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>عقاراتي</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{--bg:#0d1117;--s:#161b22;--c:#1c2128;--b:#30363d;--g:#d4a843;--gl:#f0c060;--gd:rgba(212,168,67,.15);--t:#e6edf3;--m:#8b949e;--gr:#3fb950;--r:#f85149;--bl:#58a6ff;--pu:#bc8cff;}
+html,body{height:100%;}
+body{font-family:-apple-system,Arial,sans-serif;background:var(--bg);color:var(--t);direction:rtl;font-size:14px;}
+nav{display:flex;background:var(--s);border-bottom:2px solid var(--b);position:sticky;top:0;z-index:100;}
+nav button{flex:1;background:none;border:none;border-bottom:3px solid transparent;padding:9px 2px 7px;color:var(--m);font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:1px;margin-bottom:-2px;}
+nav button .ic{font-size:17px;}
+nav button.on{color:var(--gl);border-bottom-color:var(--g);}
+.page{display:none;}.page.on{display:block;}
+.bar{padding:10px 12px;display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
+.btn-gold{background:linear-gradient(135deg,var(--g),#9a6a00);color:#000;border:none;padding:9px 14px;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;}
+input.srch{flex:1;min-width:110px;background:var(--s);border:1px solid var(--b);border-radius:9px;padding:8px 10px;color:var(--t);font-size:13px;outline:none;font-family:inherit;}
+input.srch:focus{border-color:var(--g);}
+select.fil{background:var(--s);border:1px solid var(--b);border-radius:9px;padding:8px;color:var(--t);font-size:12px;outline:none;font-family:inherit;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;padding:0 12px 90px;}
+.card{background:var(--c);border:1px solid var(--b);border-radius:13px;overflow:hidden;}
+.card-body{padding:12px;}
+.card-acts{display:flex;gap:6px;border-top:1px solid var(--b);padding-top:9px;margin-top:2px;}
+.cimg{width:100%;height:160px;background:#111820;position:relative;overflow:hidden;}
+.cimg img{width:100%;height:100%;object-fit:cover;display:block;}
+.cimg .noimg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:44px;color:#333;}
+.cimg .nc{position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.7);color:#fff;font-size:10px;padding:2px 7px;border-radius:8px;}
+.ocard,.rcard{background:var(--c);border:1px solid var(--b);border-radius:13px;padding:13px;}
+.ohead{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.oav{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--pu),#6a3ab2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.oname{font-size:15px;font-weight:800;}
+.oline{font-size:11px;color:var(--m);margin-bottom:3px;line-height:1.6;}
+.oph,.rph{font-size:12px;color:var(--bl);cursor:pointer;margin-bottom:3px;}
+.oprop-item,.sug-item{display:flex;align-items:center;gap:6px;background:var(--s);border-radius:7px;padding:6px 9px;margin-bottom:5px;}
+.oprop-name,.sug-name{font-size:12px;font-weight:600;flex:1;}
+.obio,.rbio{font-size:12px;color:var(--m);font-style:italic;background:var(--s);border-radius:7px;padding:7px 9px;margin-bottom:8px;}
+.rname{font-size:15px;font-weight:800;margin-bottom:2px;}
+.rdate{font-size:10px;color:var(--b);margin-bottom:7px;}
+.rreq{background:var(--s);border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px;color:var(--m);line-height:1.8;}
+.rsug-title{font-size:10px;font-weight:700;color:var(--g);margin-bottom:6px;text-transform:uppercase;}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px;}
+.tag{padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;}
+.tg{background:var(--gd);color:var(--gl);border:1px solid rgba(212,168,67,.3);}
+.tr{background:rgba(63,185,80,.12);color:var(--gr);border:1px solid rgba(63,185,80,.3);}
+.ts{background:rgba(248,81,73,.12);color:var(--r);border:1px solid rgba(248,81,73,.3);}
+.tb{background:rgba(88,166,255,.12);color:var(--bl);border:1px solid rgba(88,166,255,.3);}
+.tp{background:rgba(188,140,255,.12);color:var(--pu);border:1px solid rgba(188,140,255,.3);}
+.ptitle{font-size:14px;font-weight:700;margin-bottom:3px;}
+.pprice{font-size:16px;font-weight:800;color:var(--gl);margin-bottom:8px;}
+.pmeta{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:7px;}
+.pmeta span{font-size:11px;color:var(--m);}
+.pdate{font-size:10px;color:var(--b);margin-bottom:7px;}
+.bwa{background:#25D366;color:#fff;border:none;flex:1;padding:8px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.bsm{background:var(--s);border:1px solid var(--b);color:var(--t);padding:8px 10px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;}
+.bdel{background:rgba(248,81,73,.1);color:var(--r);border:1px solid rgba(248,81,73,.25);padding:8px 10px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;}
+.bcall{background:rgba(88,166,255,.12);color:var(--bl);border:1px solid rgba(88,166,255,.3);padding:8px 10px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.sbadge{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid;}
+.sp{background:rgba(212,168,67,.15);color:var(--gl);border-color:rgba(212,168,67,.3);}
+.sa{background:rgba(63,185,80,.15);color:var(--gr);border-color:rgba(63,185,80,.3);}
+.empty{grid-column:1/-1;text-align:center;padding:55px 20px;color:var(--m);}
+.empty .ei{font-size:48px;margin-bottom:9px;}
+.empty .et{font-size:15px;font-weight:700;color:var(--t);margin-bottom:4px;}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px;}
+.ov.on{display:block;}
+.modal{background:var(--s);border:1px solid var(--b);border-radius:16px;max-width:520px;margin:0 auto;padding:18px;animation:up .2s ease;}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.mtitle{font-size:17px;font-weight:800;color:var(--gl);}
+.bclose{background:var(--c);border:1px solid var(--b);color:var(--m);width:30px;height:30px;border-radius:50%;font-size:18px;cursor:pointer;font-family:inherit;flex-shrink:0;}
+.sec{background:var(--c);border:1px solid var(--b);border-radius:11px;padding:13px;margin-bottom:10px;}
+.sec-t{font-size:10px;font-weight:700;color:var(--g);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;}
+.row{display:flex;gap:8px;}
+.fg{flex:1;min-width:100px;margin-bottom:8px;}
+.fg label{display:block;font-size:11px;color:var(--m);margin-bottom:4px;}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--s);border:1px solid var(--b);border-radius:7px;padding:8px 10px;color:var(--t);font-size:13px;outline:none;font-family:inherit;-webkit-appearance:none;appearance:none;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--g);}
+.fg textarea{resize:vertical;min-height:65px;}
+.fg select option{background:#1c2128;}
+input[type=date]{color-scheme:dark;}
+.loc-group{display:flex;gap:0;align-items:stretch;}
+.loc-wrap{position:relative;flex:1;}
+.loc-wrap input{width:100%;border-radius:7px 0 0 7px !important;}
+.loc-btn{background:var(--gd);border:1px solid var(--g);border-right:none;color:var(--gl);padding:0 10px;border-radius:0 7px 7px 0;font-size:14px;cursor:pointer;flex-shrink:0;font-family:inherit;}
+.drop-list{position:absolute;top:100%;right:0;left:0;background:var(--c);border:1px solid var(--g);border-radius:8px;z-index:400;max-height:170px;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:0 4px 16px rgba(0,0,0,.5);margin-top:2px;}
+.drop-item{padding:10px 12px;font-size:13px;cursor:pointer;border-bottom:1px solid var(--b);}
+.drop-item:last-child{border-bottom:none;}
+.drop-item:active,.drop-item:hover{background:var(--gd);}
+.drop-empty{padding:10px 12px;font-size:12px;color:var(--m);text-align:center;}
+.uplabel{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:2px dashed var(--b);border-radius:10px;padding:18px 12px;cursor:pointer;text-align:center;margin-bottom:10px;}
+.uplabel input[type=file]{display:none;}
+.thumbgrid{display:flex;flex-wrap:wrap;gap:7px;}
+.tw{position:relative;}
+.tw img{width:65px;height:65px;object-fit:cover;border-radius:7px;border:2px solid var(--b);display:block;}
+.tw .tdel{position:absolute;top:-5px;left:-5px;background:var(--r);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;}
+.picker{max-height:170px;overflow-y:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--b);border-radius:9px;}
+.pick-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-bottom:1px solid var(--b);cursor:pointer;}
+.pick-item:last-child{border-bottom:none;}
+.pick-item.on{background:rgba(63,185,80,.07);}
+.pchk{width:16px;height:16px;border:2px solid var(--b);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;}
+.pick-item.on .pchk{background:var(--gr);border-color:var(--gr);color:#fff;}
+.pname{font-size:12px;font-weight:600;flex:1;}
+.pinfo{font-size:10px;color:var(--m);}
+.btn-save{width:100%;background:linear-gradient(135deg,var(--g),#9a6a00);color:#000;border:none;padding:12px;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;margin-top:3px;font-family:inherit;}
+.loc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;min-height:24px;}
+.ltag{display:inline-flex;align-items:center;gap:4px;background:var(--s);border:1px solid var(--b);border-radius:20px;padding:4px 7px 4px 5px;font-size:12px;}
+.ltag button{background:none;border:none;color:var(--r);cursor:pointer;font-size:14px;line-height:1;padding:0;}
+.wabox{background:#0a180a;border:1px solid #25D366;border-radius:9px;padding:12px;font-size:12px;line-height:1.9;white-space:pre-wrap;color:#c8f0c8;max-height:230px;overflow-y:auto;margin:10px 0;-webkit-overflow-scrolling:touch;}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--gr);color:#000;padding:8px 20px;border-radius:30px;font-weight:700;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;max-width:90vw;text-align:center;}
+#toast.on{opacity:1;}
+@media(max-width:380px){.grid{grid-template-columns:1fr;}.modal{padding:13px;}}
+</style>
+</head>
+<body>
+<nav>
+  <button id="nb-props" class="on" onclick="goTab('props')"><span class="ic">🏠</span>العقارات</button>
+  <button id="nb-owners" onclick="goTab('owners')"><span class="ic">👤</span>الملاك</button>
+  <button id="nb-requests" onclick="goTab('requests')"><span class="ic">📋</span>الطلبات</button>
+  <button id="nb-backup" onclick="goTab('backup')"><span class="ic">💾</span>نسخ احتياطي</button>
+</nav>
+
+<!-- PROPS -->
+<div class="page on" id="page-props">
+  <div class="bar">
+    <button class="btn-gold" onclick="propOpen(null)">＋ عقار</button>
+    <input class="srch" id="p-srch" placeholder="🔍 بحث..." oninput="renderProps()">
+    <select class="fil" id="p-ftype" onchange="renderProps()"><option value="">كل الأنواع</option><option>أرض</option><option>شقة</option><option>فيلا</option><option>استراحة</option><option>محل تجاري</option><option>مستودع</option><option>دور</option><option>بيت</option></select>
+    <select class="fil" id="p-fstat" onchange="renderProps()"><option value="">كل الحالات</option><option>للبيع</option><option>للإيجار</option><option>للبيع أو الإيجار</option><option>مباع</option><option>مؤجر</option></select>
+  </div>
+  <div class="grid" id="props-grid"></div>
+</div>
+
+<!-- OWNERS -->
+<div class="page" id="page-owners">
+  <div class="bar">
+    <button class="btn-gold" onclick="ownerOpen(null)">＋ مالك</button>
+    <input class="srch" id="o-srch" placeholder="🔍 بحث عن مالك..." oninput="renderOwners()">
+  </div>
+  <div class="grid" id="owners-grid"></div>
+</div>
+
+<!-- REQUESTS -->
+<div class="page" id="page-requests">
+  <div class="bar">
+    <button class="btn-gold" onclick="reqOpen(null)">＋ طلب جديد</button>
+    <input class="srch" id="r-srch" placeholder="🔍 بحث عن طلب..." oninput="renderRequests()">
+    <select class="fil" id="r-fstat" onchange="renderRequests()"><option value="">كل الحالات</option><option value="active">نشط</option><option value="pending">معلّق</option><option value="closed">مغلق</option></select>
+  </div>
+  <div class="grid" id="requests-grid"></div>
+</div>
+
+<!-- BACKUP -->
+<div class="page" id="page-backup">
+  <div style="padding:14px;max-width:480px;margin:0 auto;">
+    <div class="sec"><div class="sec-t">📊 إحصائيات</div><div id="bk-stats" style="font-size:13px;line-height:2.3;color:var(--m);"></div></div>
+    <div class="sec">
+      <div class="sec-t">💾 حفظ نسخة</div>
+      <div class="fg" style="margin-bottom:9px;"><label>اسم النسخة (اختياري)</label><input id="bk-name" placeholder="مثال: قبل التحديث"></div>
+      <button class="btn-save" onclick="bkSave()" style="margin-bottom:8px;">💾 حفظ داخل التطبيق</button>
+      <button class="btn-save" onclick="bkExport()" style="background:linear-gradient(135deg,var(--bl),#1a5fa0);margin-top:0;">📥 تحميل ملف JSON</button>
+      <button class="btn-save" onclick="bkShare()" style="background:linear-gradient(135deg,#25D366,#1a8f4a);margin-top:8px;">📲 مشاركة النسخة عبر واتساب</button>
+    </div>
+    <div class="sec"><div class="sec-t">🗂 سجل النسخ</div><div id="bk-list"></div></div>
+    <div class="sec">
+      <div class="sec-t">📂 استيراد</div>
+      <p style="font-size:11px;color:var(--m);margin-bottom:9px;line-height:1.7;">استعادة من ملف JSON. <strong style="color:var(--r);">سيُستبدل كل شيء.</strong></p>
+      <label class="uplabel"><input type="file" id="import-file" accept=".json" onchange="bkImport(this)"><div style="font-size:24px;">📂</div><div style="font-size:13px;font-weight:700;color:var(--t);">اختر ملف .json</div></label>
+    </div>
+    <div class="sec">
+      <div class="sec-t">🗺 إدارة المناطق</div>
+      <div style="display:flex;gap:6px;margin-bottom:8px;"><input id="new-region" placeholder="اسم المنطقة..." style="flex:1;background:var(--s);border:1px solid var(--b);border-radius:7px;padding:8px 10px;color:var(--t);font-size:13px;outline:none;font-family:inherit;"><button class="btn-gold" onclick="locAdd('regions','new-region','tags-regions')" style="padding:8px 12px;">＋</button></div>
+      <div class="loc-tags" id="tags-regions"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-t">🏙 إدارة المدن</div>
+      <div style="display:flex;gap:6px;margin-bottom:8px;"><input id="new-city" placeholder="اسم المدينة..." style="flex:1;background:var(--s);border:1px solid var(--b);border-radius:7px;padding:8px 10px;color:var(--t);font-size:13px;outline:none;font-family:inherit;"><button class="btn-gold" onclick="locAdd('cities','new-city','tags-cities')" style="padding:8px 12px;">＋</button></div>
+      <div class="loc-tags" id="tags-cities"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-t">🏘 إدارة الأحياء</div>
+      <div style="display:flex;gap:6px;margin-bottom:8px;"><input id="new-district" placeholder="اسم الحي..." style="flex:1;background:var(--s);border:1px solid var(--b);border-radius:7px;padding:8px 10px;color:var(--t);font-size:13px;outline:none;font-family:inherit;"><button class="btn-gold" onclick="locAdd('districts','new-district','tags-districts')" style="padding:8px 12px;">＋</button></div>
+      <div class="loc-tags" id="tags-districts"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-t">📊 Google Sheets</div>
+      <p style="font-size:12px;color:var(--m);margin-bottom:9px;line-height:1.7;">أضف الرابط بعد الإعداد وسيعمل فوراً.</p>
+      <input id="sheets-url" placeholder="الصق رابط Google Sheets هنا..." style="width:100%;background:var(--s);border:1px solid var(--b);border-radius:7px;padding:8px 10px;color:var(--t);font-size:12px;outline:none;font-family:inherit;margin-bottom:8px;">
+      <button class="btn-save" onclick="sheetsSave()" style="background:linear-gradient(135deg,#34a853,#1e7e34);margin-top:0;">📤 رفع البيانات لـ Google Sheets</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROP FORM -->
+<div class="ov" id="ov-prop"><div class="modal">
+  <div class="mhead"><div class="mtitle" id="prop-ftitle">إضافة عقار</div><button class="bclose" onclick="closeOv('ov-prop')">×</button></div>
+  <div class="sec"><div class="sec-t">📷 صور العقار</div>
+    <label class="uplabel"><input type="file" id="img-input" accept="image/*" multiple><div style="font-size:26px">📂</div><div style="font-size:13px;font-weight:700;color:var(--t)">اضغط لاختيار الصور</div><div style="font-size:11px;color:var(--m)">JPG · PNG · WEBP</div></label>
+    <div class="thumbgrid" id="thumbs"></div>
+  </div>
+  <div class="sec"><div class="sec-t">🏠 معلومات العقار</div>
+    <div class="fg"><label>اسم / وصف العقار *</label><input id="f-ptitle" placeholder="مثال: أرض تجارية شارع الملك"></div>
+    <div class="row">
+      <div class="fg"><label>نوع العقار</label><select id="f-ptype"><option>أرض</option><option>شقة</option><option>فيلا</option><option>استراحة</option><option>محل تجاري</option><option>مستودع</option><option>دور</option><option>بيت</option></select></div>
+      <div class="fg"><label>الحالة</label><select id="f-pstat" onchange="chkC('f-pstat','f-pstat-cw')"><option>للبيع</option><option>للإيجار</option><option>للبيع أو الإيجار</option><option>مباع</option><option>مؤجر</option><option value="__c__">أخرى...</option></select></div>
+    </div>
+    <div class="fg" id="f-pstat-cw" style="display:none;"><label>حالة مخصصة</label><input id="f-pstat-c" placeholder="اكتب الحالة..."></div>
+    <div class="row">
+      <div class="fg"><label>السعر (ريال)</label><input id="f-pprice" placeholder="500000"></div>
+      <div class="fg"><label>المساحة (م²)</label><input id="f-parea2" placeholder="800"></div>
+    </div>
+    <div class="row">
+      <div class="fg"><label>المنطقة</label><div class="loc-group"><div class="loc-wrap"><input id="f-pregion" placeholder="اختر ▼" autocomplete="off" onblur="setTimeout(function(){hideDrop('dd-pregion')},200)" onfocus="showDrop('f-pregion','dd-pregion','regions')"><div id="dd-pregion" class="drop-list" style="display:none;"></div></div><button type="button" class="loc-btn" onclick="tglDrop('f-pregion','dd-pregion','regions')">▼</button></div></div>
+      <div class="fg"><label>المدينة</label><div class="loc-group"><div class="loc-wrap"><input id="f-pcity" placeholder="اختر ▼" autocomplete="off" onblur="setTimeout(function(){hideDrop('dd-pcity')},200)" onfocus="showDrop('f-pcity','dd-pcity','cities')"><div id="dd-pcity" class="drop-list" style="display:none;"></div></div><button type="button" class="loc-btn" onclick="tglDrop('f-pcity','dd-pcity','cities')">▼</button></div></div>
+    </div>
+    <div class="row">
+      <div class="fg"><label>الحي</label><div class="loc-group"><div class="loc-wrap"><input id="f-pdistrict" placeholder="اختر ▼" autocomplete="off" onblur="setTimeout(function(){hideDrop('dd-pdistrict')},200)" onfocus="showDrop('f-pdistrict','dd-pdistrict','districts')"><div id="dd-pdistrict" class="drop-list" style="display:none;"></div></div><button type="button" class="loc-btn" onclick="tglDrop('f-pdistrict','dd-pdistrict','districts')">▼</button></div></div>
+      <div class="fg"><label>عدد الغرف</label><input id="f-prooms" placeholder="5"></div>
+    </div>
+    <div class="row">
+      <div class="fg"><label>📅 تاريخ الإضافة</label><input type="date" id="f-pdate"></div>
+      <div class="fg"><label>المالك</label><select id="f-powner"><option value="">— اختر مالكاً —</option></select></div>
+    </div>
+  </div>
+  <div class="sec"><div class="sec-t">📍 الموقع</div>
+    <div class="fg"><label>رابط Google Maps</label><input id="f-ploc" placeholder="الصق رابط الموقع هنا"></div>
+    <div class="fg"><label>وصف الموقع</label><input id="f-plocd" placeholder="قريب من دوار العروبة..."></div>
+  </div>
+  <div class="sec"><div class="sec-t">📋 تفاصيل إضافية</div>
+    <div class="row">
+      <div class="fg"><label>رقم الصك</label><input id="f-pref" placeholder="رقم مرجعي"></div>
+      <div class="fg"><label>رقم الحارس</label><input id="f-pguard" type="tel" placeholder="05xxxxxxxx"></div>
+    </div>
+    <div class="fg"><label>🎬 اسم / رابط الفيديو</label><input id="f-pvideo" placeholder="اسم المقطع أو رابط"></div>
+    <div class="fg"><label>ملاحظات</label><textarea id="f-pnotes" placeholder="أي معلومات إضافية..."></textarea></div>
+  </div>
+  <button class="btn-save" onclick="propSave()">💾 حفظ العقار</button>
+</div></div>
+
+<!-- OWNER FORM -->
+<div class="ov" id="ov-owner"><div class="modal">
+  <div class="mhead"><div class="mtitle" id="owner-ftitle">إضافة مالك</div><button class="bclose" onclick="closeOv('ov-owner')">×</button></div>
+  <div class="sec"><div class="sec-t">👤 البيانات الأساسية</div>
+    <div class="fg"><label>اسم المالك *</label><input id="f-oname" placeholder="اسم المالك الكامل"></div>
+    <div class="fg"><label>نبذة عن المالك</label><textarea id="f-obio" placeholder="شخصيته، طبيعة التعامل..." style="min-height:60px;"></textarea></div>
+    <div class="row">
+      <div class="fg"><label>نوع الملكية</label><select id="f-otype"><option value="">—</option><option>فرد</option><option>شركة</option><option>مؤسسة</option><option>ورثة</option></select></div>
+      <div class="fg"><label>الجنسية</label><input id="f-onat" placeholder="مثال: سعودي"></div>
+    </div>
+    <div class="row">
+      <div class="fg"><label>📅 تاريخ التسجيل</label><input type="date" id="f-odate"></div>
+      <div class="fg"><label>حالة التعامل</label><select id="f-ostat" onchange="chkC('f-ostat','f-ostat-cw')"><option value="active">نشط ✅</option><option value="inactive">متوقف</option><option value="__c__">أخرى...</option></select></div>
+    </div>
+    <div class="fg" id="f-ostat-cw" style="display:none;"><label>حالة مخصصة</label><input id="f-ostat-c" placeholder="اكتب الحالة..."></div>
+  </div>
+  <div class="sec"><div class="sec-t">📞 بيانات التواصل</div>
+    <div class="row">
+      <div class="fg"><label>رقم الجوال</label><input id="f-ophone" type="tel" placeholder="05xxxxxxxx"></div>
+      <div class="fg"><label>جوال بديل</label><input id="f-ophone2" type="tel" placeholder="05xxxxxxxx"></div>
+    </div>
+    <div class="fg"><label>البريد الإلكتروني</label><input id="f-oemail" type="email" placeholder="example@email.com"></div>
+    <div class="row">
+      <div class="fg"><label>المدينة</label><div class="loc-group"><div class="loc-wrap"><input id="f-ocity" placeholder="اختر ▼" autocomplete="off" onblur="setTimeout(function(){hideDrop('dd-ocity')},200)" onfocus="showDrop('f-ocity','dd-ocity','cities')"><div id="dd-ocity" class="drop-list" style="display:none;"></div></div><button type="button" class="loc-btn" onclick="tglDrop('f-ocity','dd-ocity','cities')">▼</button></div></div>
+      <div class="fg"><label>التواصل المفضل</label><select id="f-ocpref"><option value="">—</option><option>واتساب</option><option>اتصال</option><option>بريد إلكتروني</option><option>أي وسيلة</option></select></div>
+    </div>
+    <div class="fg"><label>مصدر التعارف</label><input id="f-osrc" placeholder="إحالة، إعلان..."></div>
+  </div>
+  <div class="sec"><div class="sec-t">🪪 بيانات الهوية</div>
+    <div class="row">
+      <div class="fg"><label>نوع الهوية</label><select id="f-oidtype"><option value="">—</option><option>هوية وطنية</option><option>إقامة</option><option>جواز سفر</option></select></div>
+      <div class="fg"><label>رقم الهوية</label><input id="f-oidnum" placeholder="رقم الهوية"></div>
+    </div>
+    <div class="row">
+      <div class="fg"><label>رقم السجل التجاري</label><input id="f-ocreg" placeholder="للشركات"></div>
+      <div class="fg"><label>تاريخ الميلاد</label><input type="date" id="f-obdate"></div>
+    </div>
+  </div>
+  <div class="sec"><div class="sec-t">🏠 ربط بعقارات</div>
+    <p style="font-size:11px;color:var(--m);margin-bottom:8px;">اختر العقارات المملوكة لهذا المالك</p>
+    <div class="picker" id="owner-prop-picker"></div>
+  </div>
+  <div class="sec"><div class="sec-t">📝 ملاحظات</div>
+    <div class="fg"><label>ملاحظات عامة</label><textarea id="f-onotes" placeholder="أي معلومات مفيدة..."></textarea></div>
+  </div>
+  <button class="btn-save" onclick="ownerSave()">💾 حفظ المالك</button>
+</div></div>
+
+<!-- REQUEST FORM -->
+<div class="ov" id="ov-req"><div class="modal">
+  <div class="mhead"><div class="mtitle" id="req-ftitle">إضافة طلب</div><button class="bclose" onclick="closeOv('ov-req')">×</button></div>
+  <div class="sec"><div class="sec-t">👤 بيانات صاحب الطلب</div>
+    <div class="row">
+      <div class="fg"><label>الاسم *</label><input id="f-rname" placeholder="اسم العميل / صاحب الطلب"></div>
+      <div class="fg"><label>رقم الجوال</label><input id="f-rphone" type="tel" placeholder="05xxxxxxxx"></div>
+    </div>
+    <div class="fg"><label>نبذة عن العميل</label><textarea id="f-rbio" placeholder="شخصيته، مستوى الجدية..." style="min-height:55px;"></textarea></div>
+    <div class="row">
+      <div class="fg"><label>حالة الطلب</label><select id="f-rstat" onchange="chkC('f-rstat','f-rstat-cw')"><option value="active">نشط — يبحث</option><option value="pending">معلّق ⏳</option><option value="closed">مغلق ✅</option><option value="__c__">أخرى...</option></select></div>
+      <div class="fg"><label>📅 تاريخ التواصل</label><input type="date" id="f-rdate"></div>
+    </div>
+    <div class="fg" id="f-rstat-cw" style="display:none;"><label>حالة مخصصة</label><input id="f-rstat-c" placeholder="اكتب الحالة..."></div>
+  </div>
+  <div class="sec"><div class="sec-t">📋 تفاصيل الطلب</div>
+    <div class="fg"><label>تفاصيل الطلب الكاملة</label><textarea id="f-rdetail" placeholder="اكتب كل تفاصيل الطلب بحرية..." style="min-height:80px;"></textarea></div>
+    <div class="row">
+      <div class="fg"><label>نوع العقار المطلوب</label><select id="f-rrtype"><option value="">غير محدد</option><option>أرض</option><option>شقة</option><option>فيلا</option><option>استراحة</option><option>محل تجاري</option><option>مستودع</option><option>دور</option><option>بيت</option></select></div>
+      <div class="fg"><label>الغرض</label><select id="f-rpurp"><option value="">غير محدد</option><option>شراء</option><option>إيجار</option><option>شراء أو إيجار</option></select></div>
+    </div>
+    <div class="fg"><label>الميزانية (ريال)</label><input id="f-rbudget" placeholder="500000"></div>
+    <div class="row">
+      <div class="fg"><label>المنطقة المفضلة</label><div class="loc-group"><div class="loc-wrap"><input id="f-rregion" placeholder="اختر ▼" autocomplete="off" onblur="setTimeout(function(){hideDrop('dd-rregion')},200)" onfocus="showDrop('f-rregion','dd-rregion','regions')"><div id="dd-rregion" class="drop-list" style="display:none;"></div></div><button type="button" class="loc-btn" onclick="tglDrop('f-rregion','dd-rregion','regions')">▼</button></div></div>
+      <div class="fg"><label>المدينة المفضلة</label><div class="loc-group"><div class="loc-wrap"><input id="f-rcity" placeholder="اختر ▼" autocomplete="off" onblur="setTimeout(function(){hideDrop('dd-rcity')},200)" onfocus="showDrop('f-rcity','dd-rcity','cities')"><div id="dd-rcity" class="drop-list" style="display:none;"></div></div><button type="button" class="loc-btn" onclick="tglDrop('f-rcity','dd-rcity','cities')">▼</button></div></div>
+    </div>
+    <div class="fg"><label>الحي المفضل</label><div class="loc-group"><div class="loc-wrap"><input id="f-rdistrict" placeholder="اختر ▼" autocomplete="off" onblur="setTimeout(function(){hideDrop('dd-rdistrict')},200)" onfocus="showDrop('f-rdistrict','dd-rdistrict','districts')"><div id="dd-rdistrict" class="drop-list" style="display:none;"></div></div><button type="button" class="loc-btn" onclick="tglDrop('f-rdistrict','dd-rdistrict','districts')">▼</button></div></div>
+    <div class="fg" style="margin-top:4px;"><label>ملاحظات إضافية</label><textarea id="f-rnotes" placeholder="مثلاً: يريد 4 غرف، قريب من مدرسة..."></textarea></div>
+  </div>
+  <div class="sec"><div class="sec-t">🏠 العقارات المرشحة</div>
+    <p style="font-size:11px;color:var(--m);margin-bottom:7px;">اختر من عقاراتك — اضغط على الحالة لتغييرها</p>
+    <div class="picker" id="req-prop-picker"></div>
+  </div>
+  <div class="sec"><div class="sec-t">📝 ملاحظات المتابعة</div>
+    <div class="fg"><label>آخر تواصل / ملاحظات</label><textarea id="f-rfollowup" placeholder="تواصلت معه 15/5، قال يفكر..."></textarea></div>
+  </div>
+  <button class="btn-save" onclick="reqSave()">💾 حفظ الطلب</button>
+</div></div>
+
+<!-- WA -->
+<div class="ov" id="ov-wa"><div class="modal" style="max-width:440px;">
+  <div class="mhead"><div class="mtitle">📤 إرسال واتساب</div><button class="bclose" onclick="closeOv('ov-wa')">×</button></div>
+  <div class="wabox" id="wa-prev"></div>
+  <div style="display:flex;gap:7px;">
+    <button class="bwa" style="border-radius:8px;flex:1.5;" onclick="waSend()">📲 فتح واتساب</button>
+    <button class="bsm" style="flex:1;" onclick="waCopy()">📋 نسخ</button>
+  </div>
+</div></div>
+
+<div id="toast"></div>
+<script>
+"use strict";
+var DB={props:[],owners:[],requests:[],regions:[],cities:[],districts:[]};
+var IMGS=[],PICK_SEL={},OWNER_PICK=[],EDIT={prop:null,owner:null,req:null},WA_MSG='';
+var K={props:'aq_p',owners:'aq_o',requests:'aq_r',regions:'aq_reg',cities:'aq_cit',districts:'aq_dis'};
+var BK_KEY='aq_bk';
+
+function load(){
+  ['aqarat_v2','aqv3','aqv4','aqv5'].forEach(function(k){
+    var old=localStorage.getItem(k);if(!old||localStorage.getItem(K.props))return;
+    try{var d=JSON.parse(old);
+      if(Array.isArray(d)&&d[0]&&d[0].title){localStorage.setItem(K.props,JSON.stringify(d));}
+      else if(d&&d.props){localStorage.setItem(K.props,JSON.stringify(d.props||[]));localStorage.setItem(K.owners,JSON.stringify(d.owners||[]));localStorage.setItem(K.requests,JSON.stringify(d.requests||d.clients||[]));}
+    }catch(e){}
+  });
+  var lc=localStorage.getItem('aq_clients');if(lc&&!localStorage.getItem(K.requests)){try{localStorage.setItem(K.requests,lc);}catch(e){}}
+  // migrate old single districts
+  var od=localStorage.getItem('aq_districts');if(od&&!localStorage.getItem(K.districts)){try{localStorage.setItem(K.districts,od);}catch(e){}}
+  function rd(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(e){return[];}}
+  DB.props=rd(K.props);DB.owners=rd(K.owners);DB.requests=rd(K.requests);
+  DB.regions=rd(K.regions);DB.cities=rd(K.cities);DB.districts=rd(K.districts);
+}
+
+function persist(){
+  try{
+    localStorage.setItem(K.props,JSON.stringify(DB.props));
+    localStorage.setItem(K.owners,JSON.stringify(DB.owners));
+    localStorage.setItem(K.requests,JSON.stringify(DB.requests));
+    localStorage.setItem(K.regions,JSON.stringify(DB.regions));
+    localStorage.setItem(K.cities,JSON.stringify(DB.cities));
+    localStorage.setItem(K.districts,JSON.stringify(DB.districts));
+    return true;
+  }catch(e){toast('⚠️ تجاوز حد التخزين — قلل الصور');return false;}
+}
+
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+function today(){var d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function pad(n){return n<10?'0'+n:''+n;}
+function fdate(s){if(!s)return'';var p=s.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:s;}
+function fmt(n){var x=Number(String(n||'').replace(/[^0-9]/g,''));return isNaN(x)||x===0?'':x.toLocaleString('ar-SA');}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function val(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+function setv(id,v){var e=document.getElementById(id);if(e)e.value=v||'';}
+function clr(ids){ids.forEach(function(id){setv(id,'');});}
+function emptyHTML(ic,tt,sub){return '<div class="empty" style="grid-column:1/-1"><div class="ei">'+ic+'</div><div class="et">'+tt+'</div><div>'+sub+'</div></div>';}
+function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on');},2800);}
+
+function goTab(name){
+  document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on');});
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on');});
+  document.getElementById('nb-'+name).classList.add('on');
+  document.getElementById('page-'+name).classList.add('on');
+  if(name==='backup'){renderBkStats();renderBkList();renderLocTags();}
+}
+
+function openOv(id){var e=document.getElementById(id);e.classList.add('on');e.scrollTop=0;}
+function closeOv(id){document.getElementById(id).classList.remove('on');}
+
+function chkC(selId,wrapId){var w=document.getElementById(wrapId);if(w)w.style.display=val(selId)==='__c__'?'block':'none';}
+function getStat(selId,cId){var v=val(selId);return v==='__c__'?val(cId):v;}
+function setStat(selId,cId,wrapId,v){
+  var sel=document.getElementById(selId);
+  var found=Array.from(sel.options).some(function(o){return(o.value||o.text)===v;});
+  if(found){sel.value=v;var w=document.getElementById(wrapId);if(w)w.style.display='none';}
+  else{sel.value='__c__';setv(cId,v);var w=document.getElementById(wrapId);if(w)w.style.display='block';}
+}
+
+// LOCATION LISTS
+function locAdd(key,inputId,tagsId){
+  var inp=document.getElementById(inputId);
+  var name=(inp?inp.value:'').trim();
+  if(!name){toast('⚠️ اكتب الاسم أولاً');return;}
+  if(DB[key].indexOf(name)>=0){toast('موجود بالفعل في القائمة');return;}
+  DB[key].push(name);DB[key].sort();
+  localStorage.setItem(K[key],JSON.stringify(DB[key]));
+  if(inp)inp.value='';
+  renderLocTags();toast('✅ تمت الإضافة: '+name);
+}
+
+function locDel(key,name){
+  DB[key]=DB[key].filter(function(d){return d!==name;});
+  localStorage.setItem(K[key],JSON.stringify(DB[key]));
+  renderLocTags();
+}
+
+function renderLocTags(){
+  var map={regions:'tags-regions',cities:'tags-cities',districts:'tags-districts'};
+  var empty={regions:'لا توجد مناطق',cities:'لا توجد مدن',districts:'لا توجد أحياء'};
+  Object.keys(map).forEach(function(key){
+    var el=document.getElementById(map[key]);if(!el)return;
+    if(!DB[key].length){el.innerHTML='<span style="font-size:12px;color:var(--m);">'+empty[key]+' — أضف من الحقل أعلاه</span>';return;}
+    el.innerHTML=DB[key].map(function(d){
+      var safeD=d.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      return '<span class="ltag">'+esc(d)+'<button onclick="locDel(\''+key+'\',\''+safeD+'\')">×</button></span>';
+    }).join('');
+  });
+}
+
+// DROPDOWN
+function showDrop(inputId,dropId,key){
+  var inp=document.getElementById(inputId);
+  var q=(inp?inp.value:'').trim().toLowerCase();
+  var drop=document.getElementById(dropId);if(!drop)return;
+  var list=DB[key].filter(function(d){return !q||d.toLowerCase().includes(q);});
+  if(!list.length){drop.innerHTML='<div class="drop-empty">لا يوجد — أضف من تبويب النسخ الاحتياطي</div>';}
+  else{drop.innerHTML=list.map(function(d){return '<div class="drop-item" onmousedown="pickLoc(\''+inputId+'\',\''+dropId+'\',\''+esc(d)+'\')">'+esc(d)+'</div>';}).join('');}
+  drop.style.display='block';
+}
+
+function tglDrop(inputId,dropId,key){
+  var drop=document.getElementById(dropId);
+  if(!drop.style.display||drop.style.display==='none'){showDrop(inputId,dropId,key);}
+  else{drop.style.display='none';}
+}
+
+function pickLoc(inputId,dropId,v){
+  setv(inputId,v);
+  var drop=document.getElementById(dropId);if(drop)drop.style.display='none';
+}
+
+function hideDrop(dropId){var d=document.getElementById(dropId);if(d)d.style.display='none';}
+
+// IMAGE UPLOAD
+function initImgs(){
+  document.getElementById('img-input').addEventListener('change',function(){
+    Array.from(this.files).forEach(function(f){
+      if(!f.type.startsWith('image/'))return;
+      var r=new FileReader();
+      r.onload=function(e){compress(e.target.result,function(d){IMGS.push(d);renderThumbs();});};
+      r.readAsDataURL(f);
+    });
+    this.value='';
+  });
+}
+
+function compress(src,cb){
+  var img=new Image();
+  img.onload=function(){
+    var MAX=800,w=img.naturalWidth,h=img.naturalHeight;
+    if(w>MAX||h>MAX){if(w>=h){h=Math.round(h*MAX/w);w=MAX;}else{w=Math.round(w*MAX/h);h=MAX;}}
+    var cv=document.createElement('canvas');cv.width=w;cv.height=h;
+    cv.getContext('2d').drawImage(img,0,0,w,h);cb(cv.toDataURL('image/jpeg',0.75));
+  };
+  img.onerror=function(){toast('⚠️ فشل تحميل الصورة');};
+  img.src=src;
+}
+
+function renderThumbs(){
+  document.getElementById('thumbs').innerHTML=IMGS.map(function(s,i){
+    return '<div class="tw"><img src="'+s+'"><button class="tdel" onclick="delThumb('+i+')">×</button></div>';
+  }).join('');
+}
+function delThumb(i){IMGS.splice(i,1);renderThumbs();}
+
+// OWNER PROP PICKER
+function buildOwnerPick(sel){
+  OWNER_PICK=sel?sel.slice():[];
+  var el=document.getElementById('owner-prop-picker');
+  if(!DB.props.length){el.innerHTML='<div style="padding:10px;font-size:12px;color:var(--m);text-align:center;">لا توجد عقارات مضافة</div>';return;}
+  el.innerHTML=DB.props.map(function(p){
+    var on=OWNER_PICK.indexOf(p.id)>=0;
+    var loc=[p.region,p.city,p.district].filter(Boolean).join(' · ');
+    return '<div class="pick-item'+(on?' on':'')+'" onclick="ownerPickTgl(\''+p.id+'\')"><div class="pchk">'+(on?'✓':'')+'</div><div><div class="pname">'+esc(p.title)+'</div><div class="pinfo">'+esc(p.type)+(loc?' · '+esc(loc):'')+(p.price?' · '+fmt(p.price)+' ر':'')+'</div></div></div>';
+  }).join('');
+}
+function ownerPickTgl(id){var i=OWNER_PICK.indexOf(id);if(i>=0)OWNER_PICK.splice(i,1);else OWNER_PICK.push(id);buildOwnerPick(OWNER_PICK);}
+
+// REQ PROP PICKER
+function buildReqPick(suggested){
+  PICK_SEL={};(suggested||[]).forEach(function(s){PICK_SEL[s.id]=s.stat;});
+  var el=document.getElementById('req-prop-picker');
+  if(!DB.props.length){el.innerHTML='<div style="padding:10px;font-size:12px;color:var(--m);text-align:center;">لا توجد عقارات</div>';return;}
+  el.innerHTML=DB.props.map(function(p){
+    var sel=PICK_SEL[p.id];
+    var loc=[p.region,p.city,p.district].filter(Boolean).join(' · ');
+    return '<div class="pick-item'+(sel?' on':'')+'" onclick="reqPickTgl(\''+p.id+'\')"><div class="pchk">'+(sel?'✓':'')+'</div><div style="flex:1"><div class="pname">'+esc(p.title)+'</div><div class="pinfo">'+esc(p.type)+(loc?' · '+esc(loc):'')+(p.price?' · '+fmt(p.price)+' ر':'')+'</div></div>'+(sel?'<span class="sbadge s'+sel[0]+'" onclick="event.stopPropagation();reqPickCycle(\''+p.id+'\')">'+slabel(sel)+'</span>':'')+'</div>';
+  }).join('');
+}
+function reqPickTgl(id){if(PICK_SEL[id])delete PICK_SEL[id];else PICK_SEL[id]='pending';buildReqPick(sel2arr());}
+function reqPickCycle(id){var s=['pending','accepted','rejected'];PICK_SEL[id]=s[(s.indexOf(PICK_SEL[id])+1)%3];buildReqPick(sel2arr());}
+function sel2arr(){return Object.keys(PICK_SEL).map(function(k){return{id:k,stat:PICK_SEL[k]};});}
+function slabel(s){return s==='accepted'?'✅ قبل':s==='rejected'?'❌ رفض':'⏳ معلّق';}
+
+// PROP CRUD
+function propOpen(id){
+  EDIT.prop=id;IMGS=[];
+  var sel=document.getElementById('f-powner');
+  sel.innerHTML='<option value="">— اختر مالكاً —</option>';
+  DB.owners.forEach(function(o){sel.innerHTML+='<option value="'+o.id+'">'+esc(o.name)+(o.phone?' ('+esc(o.phone)+')':'')+'</option>';});
+  if(id){
+    var p=DB.props.find(function(x){return x.id===id;});
+    document.getElementById('prop-ftitle').textContent='تعديل العقار';
+    setv('f-ptitle',p.title);setv('f-ptype',p.type);
+    setStat('f-pstat','f-pstat-c','f-pstat-cw',p.status||'للبيع');
+    setv('f-pprice',p.price);setv('f-parea2',p.area);
+    setv('f-pregion',p.region||'');setv('f-pcity',p.city||'');setv('f-pdistrict',p.district||'');
+    setv('f-prooms',p.rooms);setv('f-pdate',p.date||today());setv('f-powner',p.ownerId||'');
+    setv('f-ploc',p.loc);setv('f-plocd',p.locDesc);setv('f-pref',p.ref);setv('f-pguard',p.guard);setv('f-pvideo',p.video);setv('f-pnotes',p.notes);
+    IMGS=(p.images||[]).slice();
+  }else{
+    document.getElementById('prop-ftitle').textContent='إضافة عقار';
+    clr(['f-ptitle','f-pprice','f-parea2','f-pregion','f-pcity','f-pdistrict','f-prooms','f-ploc','f-plocd','f-pref','f-pguard','f-pvideo','f-pnotes','f-pstat-c']);
+    document.getElementById('f-ptype').selectedIndex=0;document.getElementById('f-pstat').selectedIndex=0;
+    document.getElementById('f-pstat-cw').style.display='none';setv('f-powner','');setv('f-pdate',today());
+  }
+  renderThumbs();openOv('ov-prop');
+}
+
+function propSave(){
+  var title=val('f-ptitle');if(!title){toast('⚠️ أدخل اسم العقار');return;}
+  var p={id:EDIT.prop||uid(),title:title,type:val('f-ptype'),status:getStat('f-pstat','f-pstat-c'),
+    price:val('f-pprice'),area:val('f-parea2'),region:val('f-pregion'),city:val('f-pcity'),district:val('f-pdistrict'),
+    rooms:val('f-prooms'),date:val('f-pdate')||today(),ownerId:val('f-powner'),
+    loc:val('f-ploc'),locDesc:val('f-plocd'),ref:val('f-pref'),guard:val('f-pguard'),video:val('f-pvideo'),notes:val('f-pnotes'),images:IMGS.slice()};
+  if(p.ownerId){var ow=DB.owners.find(function(o){return o.id===p.ownerId;});if(ow&&(ow.propIds||[]).indexOf(p.id)<0){ow.propIds=ow.propIds||[];ow.propIds.push(p.id);}}
+  if(EDIT.prop){DB.props[DB.props.findIndex(function(x){return x.id===EDIT.prop;})]=p;}else DB.props.unshift(p);
+  if(!persist())return;
+  closeOv('ov-prop');renderProps();renderOwners();toast('✅ تم حفظ العقار');
+}
+
+function propDel(id){
+  if(!confirm('حذف هذا العقار نهائياً؟'))return;
+  DB.props=DB.props.filter(function(p){return p.id!==id;});
+  DB.owners.forEach(function(o){o.propIds=(o.propIds||[]).filter(function(pid){return pid!==id;});});
+  persist();renderProps();renderOwners();toast('🗑 تم الحذف');
+}
+
+function renderProps(){
+  var q=document.getElementById('p-srch').value.toLowerCase();
+  var ft=document.getElementById('p-ftype').value;
+  var fs=document.getElementById('p-fstat').value;
+  var list=DB.props.filter(function(p){
+    var loc=[p.region,p.city,p.district].filter(Boolean).join(' ');
+    return(!q||(p.title+' '+loc).toLowerCase().includes(q))&&(!ft||p.type===ft)&&(!fs||p.status===fs);
+  });
+  var g=document.getElementById('props-grid');
+  if(!list.length){g.innerHTML=emptyHTML('🏗️',DB.props.length?'لا نتائج':'لا توجد عقارات',DB.props.length?'غيّر الفلتر':'اضغط + عقار');return;}
+  g.innerHTML=list.map(function(p){
+    var owner=p.ownerId?DB.owners.find(function(o){return o.id===p.ownerId;}):null;
+    var img=(p.images&&p.images.length)?'<div class="cimg"><img src="'+p.images[0]+'" loading="lazy">'+(p.images.length>1?'<div class="nc">📷 '+p.images.length+'</div>':'')+'</div>':'<div class="cimg"><div class="noimg">🏠</div></div>';
+    var sc=p.status==='للإيجار'||p.status==='مؤجر'?'tr':p.status==='مباع'?'ts':'tg';
+    var loc=[p.region,p.city,p.district].filter(Boolean).join(' · ');
+    return '<div class="card">'+img+'<div class="card-body">'+
+      '<div class="tags"><span class="tag tg">'+esc(p.type)+'</span><span class="tag '+sc+'">'+esc(p.status)+'</span>'+(owner?'<span class="tag tb">👤 '+esc(owner.name)+'</span>':'')+'</div>'+
+      '<div class="ptitle">'+esc(p.title)+'</div><div class="pprice">'+(p.price?fmt(p.price)+' ريال':'—')+'</div>'+
+      '<div class="pmeta">'+(p.area?'<span>📐 '+esc(p.area)+' م²</span>':'')+(loc?'<span>📍 '+esc(loc)+'</span>':'')+(p.rooms?'<span>🛏 '+esc(p.rooms)+'</span>':'')+(p.guard?'<span>🔑 '+esc(p.guard)+'</span>':'')+'</div>'+
+      (p.date?'<div class="pdate">📅 '+fdate(p.date)+'</div>':'')+
+      '<div class="card-acts"><button class="bwa" onclick="waProp(\''+p.id+'\')">📤 إرسال</button><button class="bsm" onclick="propOpen(\''+p.id+'\')">✏️</button><button class="bdel" onclick="propDel(\''+p.id+'\')">🗑</button></div></div></div>';
+  }).join('');
+}
+
+// OWNER CRUD
+function ownerOpen(id){
+  EDIT.owner=id;
+  if(id){
+    var o=DB.owners.find(function(x){return x.id===id;});
+    document.getElementById('owner-ftitle').textContent='تعديل المالك';
+    setv('f-oname',o.name);setv('f-obio',o.bio);setv('f-otype',o.otype||'');setv('f-onat',o.nat);setv('f-odate',o.date||today());
+    setStat('f-ostat','f-ostat-c','f-ostat-cw',o.stat||'active');
+    setv('f-ophone',o.phone);setv('f-ophone2',o.phone2);setv('f-oemail',o.email);setv('f-ocity',o.city||'');setv('f-ocpref',o.cpref||'');setv('f-osrc',o.src);
+    setv('f-oidtype',o.idtype||'');setv('f-oidnum',o.idnum);setv('f-ocreg',o.creg);setv('f-obdate',o.bdate||'');setv('f-onotes',o.notes);
+    buildOwnerPick(o.propIds||[]);
+  }else{
+    document.getElementById('owner-ftitle').textContent='إضافة مالك';
+    clr(['f-oname','f-obio','f-onat','f-ophone','f-ophone2','f-oemail','f-ocity','f-osrc','f-oidnum','f-ocreg','f-onotes','f-ostat-c']);
+    ['f-otype','f-ocpref','f-oidtype'].forEach(function(i){setv(i,'');});
+    setv('f-obdate','');setv('f-ostat','active');document.getElementById('f-ostat-cw').style.display='none';setv('f-odate',today());
+    buildOwnerPick([]);
+  }
+  openOv('ov-owner');
+}
+
+function ownerSave(){
+  var name=val('f-oname');if(!name){toast('⚠️ أدخل اسم المالك');return;}
+  var o={id:EDIT.owner||uid(),name:name,bio:val('f-obio'),otype:val('f-otype'),nat:val('f-onat'),date:val('f-odate')||today(),
+    stat:getStat('f-ostat','f-ostat-c'),phone:val('f-ophone'),phone2:val('f-ophone2'),email:val('f-oemail'),
+    city:val('f-ocity'),cpref:val('f-ocpref'),src:val('f-osrc'),idtype:val('f-oidtype'),idnum:val('f-oidnum'),
+    creg:val('f-ocreg'),bdate:val('f-obdate'),notes:val('f-onotes'),propIds:OWNER_PICK.slice()};
+  DB.props.forEach(function(p){if(o.propIds.indexOf(p.id)>=0)p.ownerId=o.id;else if(p.ownerId===o.id)p.ownerId='';});
+  if(EDIT.owner){DB.owners[DB.owners.findIndex(function(x){return x.id===EDIT.owner;})]=o;}else DB.owners.unshift(o);
+  if(!persist())return;closeOv('ov-owner');renderOwners();renderProps();toast('✅ تم حفظ المالك');
+}
+
+function ownerDel(id){
+  if(!confirm('حذف هذا المالك؟'))return;
+  DB.owners=DB.owners.filter(function(o){return o.id!==id;});
+  DB.props.forEach(function(p){if(p.ownerId===id)p.ownerId='';});
+  persist();renderOwners();renderProps();toast('🗑 تم الحذف');
+}
+
+function renderOwners(){
+  var q=document.getElementById('o-srch').value.toLowerCase();
+  var list=DB.owners.filter(function(o){return !q||(o.name+' '+(o.phone||'')).toLowerCase().includes(q);});
+  var g=document.getElementById('owners-grid');
+  if(!list.length){g.innerHTML=emptyHTML('👤',DB.owners.length?'لا نتائج':'لا يوجد ملاك',DB.owners.length?'غيّر البحث':'اضغط + مالك');return;}
+  g.innerHTML=list.map(function(o){
+    var stC=o.stat==='inactive'?'ts':o.stat&&o.stat!=='active'?'tp':'tr';
+    var stL=o.stat==='inactive'?'متوقف':o.stat==='active'?'نشط ✅':o.stat||'نشط ✅';
+    var otag=o.otype?'<span class="tag tp">'+esc(o.otype)+'</span>':'';
+    var info=[o.nat&&'🌍 '+o.nat,o.city&&'🏙 '+o.city,o.cpref&&'💬 '+o.cpref].filter(Boolean).join(' · ');
+    var idinfo=[o.idtype&&o.idnum&&'🪪 '+o.idtype+': '+o.idnum,o.creg&&'🏛 س.ت: '+o.creg].filter(Boolean).join(' · ');
+    var linked=[];
+    (o.propIds||[]).forEach(function(pid){var p=DB.props.find(function(x){return x.id===pid;});if(p)linked.push(p);});
+    DB.props.forEach(function(p){if(p.ownerId===o.id&&linked.indexOf(p)<0)linked.push(p);});
+    var propsH=linked.length?linked.map(function(p){
+      var sc=p.status==='للإيجار'||p.status==='مؤجر'?'tr':p.status==='مباع'?'ts':'tg';
+      return '<div class="oprop-item"><span class="oprop-name">'+esc(p.title)+'</span><span class="tag '+sc+'" style="font-size:10px;">'+esc(p.status)+'</span><button class="bsm" style="padding:3px 7px;font-size:11px;" onclick="waProp(\''+p.id+'\')">📤</button></div>';
+    }).join(''):'<div style="font-size:11px;color:var(--m);padding:4px 0;">لا توجد عقارات مرتبطة</div>';
+    return '<div class="ocard"><div class="ohead"><div class="oav">👤</div><div><div class="oname">'+esc(o.name)+'</div><div class="tags" style="margin-top:4px;"><span class="tag '+stC+'">'+stL+'</span>'+otag+'</div></div></div>'+
+      (o.bio?'<div class="obio">💬 '+esc(o.bio)+'</div>':'')+
+      (o.phone?'<div class="oph" onclick="call(\''+esc(o.phone)+'\')">📞 '+esc(o.phone)+'</div>':'')+
+      (o.phone2?'<div class="oph" onclick="call(\''+esc(o.phone2)+'\')">📞 '+esc(o.phone2)+' (بديل)</div>':'')+
+      (o.email?'<div class="oline">✉️ '+esc(o.email)+'</div>':'')+
+      (info?'<div class="oline">'+info+'</div>':'')+(idinfo?'<div class="oline">'+idinfo+'</div>':'')+
+      (o.date?'<div class="oline">📅 تسجيل: '+fdate(o.date)+'</div>':'')+
+      '<div style="font-size:11px;font-weight:700;color:var(--gl);margin:8px 0 5px;">🏠 العقارات المرتبطة ('+linked.length+')</div>'+propsH+
+      (o.notes?'<div class="oline" style="margin-top:7px;font-style:italic;">📝 '+esc(o.notes)+'</div>':'')+
+      '<div class="card-acts" style="margin-top:10px;">'+(o.phone?'<button class="bcall" onclick="waOwner(\''+o.id+'\')">📲 واتساب</button>':'')+
+      '<button class="bsm" style="flex:1;" onclick="ownerOpen(\''+o.id+'\')">✏️ تعديل</button><button class="bdel" onclick="ownerDel(\''+o.id+'\')">🗑</button></div></div>';
+  }).join('');
+}
+
+// REQUEST CRUD
+function reqOpen(id){
+  EDIT.req=id;PICK_SEL={};
+  if(id){
+    var r=DB.requests.find(function(x){return x.id===id;});
+    document.getElementById('req-ftitle').textContent='تعديل الطلب';
+    setv('f-rname',r.name);setv('f-rphone',r.phone);setv('f-rbio',r.bio);
+    setStat('f-rstat','f-rstat-c','f-rstat-cw',r.stat||'active');
+    setv('f-rdate',r.date||today());setv('f-rdetail',r.detail);setv('f-rrtype',r.rtype||'');setv('f-rpurp',r.purp||'');setv('f-rbudget',r.budget);
+    setv('f-rregion',r.region||'');setv('f-rcity',r.city||'');setv('f-rdistrict',r.district||'');
+    setv('f-rnotes',r.notes);setv('f-rfollowup',r.followup);
+    buildReqPick(r.suggested||[]);
+  }else{
+    document.getElementById('req-ftitle').textContent='إضافة طلب';
+    clr(['f-rname','f-rphone','f-rbio','f-rdetail','f-rbudget','f-rregion','f-rcity','f-rdistrict','f-rnotes','f-rfollowup','f-rstat-c']);
+    ['f-rrtype','f-rpurp'].forEach(function(i){setv(i,'');});
+    setv('f-rstat','active');document.getElementById('f-rstat-cw').style.display='none';setv('f-rdate',today());
+    buildReqPick([]);
+  }
+  openOv('ov-req');
+}
+
+function reqSave(){
+  var name=val('f-rname');if(!name){toast('⚠️ أدخل اسم صاحب الطلب');return;}
+  var r={id:EDIT.req||uid(),name:name,phone:val('f-rphone'),bio:val('f-rbio'),stat:getStat('f-rstat','f-rstat-c'),
+    date:val('f-rdate')||today(),detail:val('f-rdetail'),rtype:val('f-rrtype'),purp:val('f-rpurp'),budget:val('f-rbudget'),
+    region:val('f-rregion'),city:val('f-rcity'),district:val('f-rdistrict'),
+    notes:val('f-rnotes'),followup:val('f-rfollowup'),suggested:sel2arr()};
+  if(EDIT.req){DB.requests[DB.requests.findIndex(function(x){return x.id===EDIT.req;})]=r;}else DB.requests.unshift(r);
+  if(!persist())return;closeOv('ov-req');renderRequests();toast('✅ تم حفظ الطلب');
+}
+
+function reqDel(id){
+  if(!confirm('حذف هذا الطلب؟'))return;
+  DB.requests=DB.requests.filter(function(r){return r.id!==id;});
+  persist();renderRequests();toast('🗑 تم الحذف');
+}
+
+function reqCycleStat(rid,pid){
+  var r=DB.requests.find(function(x){return x.id===rid;});
+  var s=(r.suggested||[]).find(function(x){return x.id===pid;});if(!s)return;
+  var steps=['pending','accepted','rejected'];s.stat=steps[(steps.indexOf(s.stat)+1)%3];
+  persist();renderRequests();
+}
+
+function renderRequests(){
+  var q=document.getElementById('r-srch').value.toLowerCase();
+  var fs=document.getElementById('r-fstat').value;
+  var list=DB.requests.filter(function(r){
+    var loc=[r.region,r.city,r.district].filter(Boolean).join(' ');
+    return(!q||(r.name+' '+(r.phone||'')+' '+loc).toLowerCase().includes(q))&&(!fs||r.stat===fs);
+  });
+  var g=document.getElementById('requests-grid');
+  if(!list.length){g.innerHTML=emptyHTML('📋',DB.requests.length?'لا نتائج':'لا توجد طلبات',DB.requests.length?'غيّر البحث':'اضغط + طلب جديد');return;}
+  g.innerHTML=list.map(function(r){
+    var stC=r.stat==='closed'?'tr':r.stat==='pending'?'tg':r.stat&&r.stat!=='active'?'tp':'tb';
+    var stL=r.stat==='closed'?'مغلق ✅':r.stat==='pending'?'معلّق ⏳':r.stat==='active'?'نشط 🔍':r.stat||'نشط 🔍';
+    var req=[r.rtype,r.purp,r.budget&&'ميزانية: '+fmt(r.budget)+' ر'].filter(Boolean).join(' · ');
+    var loc=[r.region,r.city,r.district].filter(Boolean).join(' · ');
+    var sugH='';
+    if(r.suggested&&r.suggested.length){
+      var items=r.suggested.map(function(s){
+        var p=DB.props.find(function(x){return x.id===s.id;});if(!p)return'';
+        return '<div class="sug-item"><div class="sug-name">'+esc(p.title)+'</div><span class="sbadge s'+s.stat[0]+'" onclick="reqCycleStat(\''+r.id+'\',\''+p.id+'\')">'+slabel(s.stat)+'</span><button class="bsm" style="padding:3px 7px;font-size:10px;" onclick="waProp(\''+p.id+'\')">📤</button></div>';
+      }).filter(Boolean).join('');
+      if(items)sugH='<div style="margin-bottom:8px;"><div class="rsug-title">🏠 العقارات المرشحة</div>'+items+'</div>';
+    }
+    return '<div class="rcard"><div class="tags" style="margin-bottom:7px;"><span class="tag '+stC+'">'+stL+'</span></div>'+
+      '<div class="rname">'+esc(r.name)+'</div>'+
+      (r.phone?'<div class="rph" onclick="call(\''+esc(r.phone)+'\')">📞 '+esc(r.phone)+'</div>':'')+
+      (r.date?'<div class="rdate">📅 '+fdate(r.date)+'</div>':'')+
+      (r.bio?'<div class="rbio">💬 '+esc(r.bio)+'</div>':'')+
+      (r.detail?'<div class="rreq">📋 '+esc(r.detail)+'</div>':'')+
+      ((req||loc)?'<div class="rreq">'+(req||'')+(req&&loc?' · ':'')+esc(loc)+'</div>':'')+
+      sugH+(r.notes?'<div class="rreq">📝 '+esc(r.notes)+'</div>':'')+
+      (r.followup?'<div style="font-size:11px;color:var(--m);font-style:italic;margin-bottom:8px;">🗓 '+esc(r.followup)+'</div>':'')+
+      '<div class="card-acts">'+(r.phone?'<button class="bcall" onclick="waReq(\''+r.id+'\')">📲 واتساب</button>':'')+
+      '<button class="bsm" style="flex:1;" onclick="reqOpen(\''+r.id+'\')">✏️ تعديل</button><button class="bdel" onclick="reqDel(\''+r.id+'\')">🗑</button></div></div>';
+  }).join('');
+}
+
+// WHATSAPP
+function buildPropMsg(p){
+  var owner=p.ownerId?DB.owners.find(function(o){return o.id===p.ownerId;}):null;
+  var loc=[p.region,p.city,p.district].filter(Boolean).join(' — ');
+  var L=['🏠 *'+p.title+'*','━━━━━━━━━━━━━'];
+  if(p.type)L.push('📌 النوع: '+p.type);if(p.status)L.push('🔖 الحالة: '+p.status);
+  if(p.price)L.push('💰 السعر: '+fmt(p.price)+' ريال');if(p.area)L.push('📐 المساحة: '+p.area+' م²');
+  if(p.rooms)L.push('🛏 الغرف: '+p.rooms);if(loc)L.push('📍 '+loc);if(p.locDesc)L.push('🗺 '+p.locDesc);
+  if(p.date)L.push('📅 '+fdate(p.date));L.push('━━━━━━━━━━━━━');
+  if(owner)L.push('👤 المالك: '+owner.name+(owner.phone?' | '+owner.phone:''));
+  if(p.guard)L.push('🔑 الحارس: '+p.guard);if(p.ref)L.push('📄 رقم الصك: '+p.ref);
+  if(p.notes){L.push('━━━━━━━━━━━━━');L.push('📝 '+p.notes);}
+  if(p.video){L.push('━━━━━━━━━━━━━');L.push('🎬 '+p.video);}
+  if(p.loc){L.push('━━━━━━━━━━━━━');L.push('📌 الموقع:\n'+p.loc);}
+  return L.join('\n');
+}
+function waProp(id){var p=DB.props.find(function(x){return x.id===id;});waShow(buildPropMsg(p));}
+function waOwner(id){
+  var o=DB.owners.find(function(x){return x.id===id;});
+  var op=[];(o.propIds||[]).forEach(function(pid){var p=DB.props.find(function(x){return x.id===pid;});if(p)op.push(p);});
+  DB.props.forEach(function(p){if(p.ownerId===o.id&&op.indexOf(p)<0)op.push(p);});
+  var L=['مرحباً *'+o.name+'*،','لديك '+op.length+' عقار لدينا:'];
+  op.forEach(function(p){L.push('\n🏠 *'+p.title+'* — '+p.status+(p.price?' — '+fmt(p.price)+' ريال':''));});
+  waShow(L.join('\n'));
+}
+function waReq(id){
+  var r=DB.requests.find(function(x){return x.id===id;});
+  var L=['مرحباً *'+r.name+'*،'];
+  var pending=(r.suggested||[]).filter(function(s){return s.stat==='pending';});
+  if(pending.length){
+    L.push('لدي لك هذه العقارات المناسبة:');
+    pending.forEach(function(s){var p=DB.props.find(function(x){return x.id===s.id;});
+      if(p){var loc=[p.region,p.city,p.district].filter(Boolean).join(' - ');L.push('\n🏠 *'+p.title+'*\n'+p.type+(loc?' - '+loc:'')+(p.price?' - '+fmt(p.price)+' ريال':''));}
+    });
+  }else{L.push('سأتواصل معك قريباً بعروض مناسبة لطلبك.');}
+  waShow(L.join('\n'));
+}
+function waShow(msg){WA_MSG=msg;document.getElementById('wa-prev').textContent=msg;openOv('ov-wa');}
+function waSend(){window.open('https://wa.me/?text='+encodeURIComponent(WA_MSG),'_blank');}
+function waCopy(){navigator.clipboard.writeText(WA_MSG).then(function(){toast('📋 تم النسخ');});}
+function call(n){window.location.href='tel:'+n;}
+
+// BACKUP
+function bkLoad(){try{return JSON.parse(localStorage.getItem(BK_KEY)||'[]');}catch(e){return[];}}
+function bkPersist(list){try{localStorage.setItem(BK_KEY,JSON.stringify(list));return true;}catch(e){toast('⚠️ تجاوز حد التخزين');return false;}}
+
+function bkSave(){
+  var name=val('bk-name')||('نسخة '+new Date().toLocaleString('ar-SA'));
+  var snap={id:uid(),label:name,date:new Date().toISOString(),counts:{props:DB.props.length,owners:DB.owners.length,requests:DB.requests.length},
+    data:{props:DB.props,owners:DB.owners,requests:DB.requests,regions:DB.regions,cities:DB.cities,districts:DB.districts}};
+  var list=bkLoad();list.unshift(snap);
+  if(!bkPersist(list))return;setv('bk-name','');renderBkList();renderBkStats();toast('✅ تم حفظ النسخة: '+name);
+}
+
+function bkExport(){
+  var name=val('bk-name')||new Date().toLocaleDateString('ar-SA').replace(/\//g,'-');
+  var data={version:8,date:new Date().toISOString(),props:DB.props,owners:DB.owners,requests:DB.requests,regions:DB.regions,cities:DB.cities,districts:DB.districts};
+  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download='عقاراتي-'+name+'.json';
+  document.body.appendChild(a);a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},500);
+  toast('✅ تم تحميل النسخة');
+}
+
+function bkImport(input){
+  var file=input.files[0];if(!file)return;
+  if(!confirm('سيتم استبدال كل البيانات الحالية.\nهل أنت متأكد؟')){input.value='';return;}
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      var d=JSON.parse(ev.target.result);
+      if(Array.isArray(d)&&d[0]&&d[0].title){DB.props=d;DB.owners=[];DB.requests=[];DB.regions=[];DB.cities=[];DB.districts=[];}
+      else{DB.props=d.props||[];DB.owners=d.owners||[];DB.requests=d.requests||d.clients||[];DB.regions=d.regions||[];DB.cities=d.cities||[];DB.districts=d.districts||[];}
+      persist();renderProps();renderOwners();renderRequests();renderBkStats();renderLocTags();
+      toast('✅ تم الاستيراد — '+DB.props.length+' عقار · '+DB.owners.length+' مالك · '+DB.requests.length+' طلب');
+    }catch(e){toast('⚠️ الملف غير صحيح');}
+    input.value='';
+  };
+  reader.readAsText(file);
+}
+
+function bkRestore(id){
+  var snap=bkLoad().find(function(x){return x.id===id;});if(!snap)return;
+  if(!confirm('استعادة النسخة:\n"'+snap.label+'"\nسيتم استبدال البيانات الحالية. هل أنت متأكد؟'))return;
+  var d=snap.data;
+  DB.props=d.props||[];DB.owners=d.owners||[];DB.requests=d.requests||d.clients||[];
+  DB.regions=d.regions||[];DB.cities=d.cities||[];DB.districts=d.districts||[];
+  persist();renderProps();renderOwners();renderRequests();renderBkStats();renderLocTags();toast('✅ تم استعادة: '+snap.label);
+}
+
+function bkExportOne(id){
+  var snap=bkLoad().find(function(x){return x.id===id;});if(!snap)return;
+  var blob=new Blob([JSON.stringify(snap.data,null,2)],{type:'application/json'});
+  var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;
+  a.download='عقاراتي-'+snap.label.replace(/[\/\\:*?"<>|]/g,'-')+'.json';
+  document.body.appendChild(a);a.click();setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},500);toast('📥 '+snap.label);
+}
+
+function bkDel(id){
+  if(!confirm('حذف هذه النسخة؟'))return;
+  bkPersist(bkLoad().filter(function(x){return x.id!==id;}));renderBkList();toast('🗑 تم الحذف');
+}
+
+function renderBkStats(){
+  var el=document.getElementById('bk-stats');if(!el)return;
+  el.innerHTML='🏠 العقارات: <strong style="color:var(--t)">'+DB.props.length+'</strong><br>'+
+    '👤 الملاك: <strong style="color:var(--t)">'+DB.owners.length+'</strong><br>'+
+    '📋 الطلبات: <strong style="color:var(--t)">'+DB.requests.length+'</strong><br>'+
+    '🗺 المناطق: <strong style="color:var(--t)">'+DB.regions.length+'</strong> · '+
+    '🏙 المدن: <strong style="color:var(--t)">'+DB.cities.length+'</strong> · '+
+    '🏘 الأحياء: <strong style="color:var(--t)">'+DB.districts.length+'</strong><br>'+
+    '🗂 النسخ: <strong style="color:var(--t)">'+bkLoad().length+'</strong><br>'+
+    '📅 '+new Date().toLocaleDateString('ar-SA');
+}
+
+function renderBkList(){
+  var list=bkLoad();var el=document.getElementById('bk-list');if(!el)return;
+  if(!list.length){el.innerHTML='<div style="font-size:12px;color:var(--m);text-align:center;padding:8px;">لا توجد نسخ بعد</div>';return;}
+  el.innerHTML=list.map(function(s){
+    var d=new Date(s.date);
+    var ds=d.toLocaleDateString('ar-SA')+' '+d.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+    var c=s.counts||{};
+    return '<div style="background:var(--s);border:1px solid var(--b);border-radius:10px;padding:10px 12px;margin-bottom:7px;">'+
+      '<div style="font-size:13px;font-weight:700;color:var(--t);margin-bottom:3px;">📌 '+esc(s.label)+'</div>'+
+      '<div style="font-size:11px;color:var(--m);margin-bottom:8px;">'+ds+' · 🏠'+(c.props||0)+' · 👤'+(c.owners||0)+' · 📋'+(c.requests||0)+'</div>'+
+      '<div style="display:flex;gap:6px;">'+
+        '<button class="bsm" style="flex:1;font-size:12px;" onclick="bkRestore(\''+s.id+'\')">♻️ استعادة</button>'+
+        '<button class="bsm" style="flex:1;font-size:12px;color:var(--bl);border-color:rgba(88,166,255,.3);" onclick="bkExportOne(\''+s.id+'\')">📥 تحميل</button>'+
+        '<button class="bsm" style="flex:1;font-size:12px;color:#25D366;border-color:rgba(37,211,102,.3);" onclick="bkShareOne(\''+s.id+'\')">📲 مشاركة</button>'+
+        '<button class="bdel" style="font-size:12px;" onclick="bkDel(\''+s.id+'\')">🗑</button>'+
+      '</div></div>';
+  }).join('');
+}
+
+function shareFile(data, filename){
+  var blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  var file = new File([blob], filename, {type:'application/json'});
+  if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+    navigator.share({files:[file], title:'نسخة احتياطية — عقاراتي', text:'نسخة احتياطية من تطبيق عقاراتي'})
+      .then(function(){ toast('✅ تمت المشاركة'); })
+      .catch(function(e){ if(e.name!=='AbortError') toast('⚠️ فشلت المشاركة'); });
+  } else if(navigator.share){
+    // fallback: share as text link
+    navigator.share({title:'نسخة احتياطية — عقاراتي', text:'نسخة احتياطية من تطبيق عقاراتي\n\nعقارات: '+data.props.length+' · ملاك: '+data.owners.length+' · طلبات: '+data.requests.length})
+      .catch(function(){});
+  } else {
+    // fallback: download
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href=url; a.download=filename;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); },500);
+    toast('📥 تم التحميل — شارك الملف يدوياً');
+  }
+}
+
+function bkShare(){
+  var name = val('bk-name') || new Date().toLocaleDateString('ar-SA').replace(/\//g,'-');
+  var data = {version:8, date:new Date().toISOString(), props:DB.props, owners:DB.owners, requests:DB.requests, regions:DB.regions, cities:DB.cities, districts:DB.districts};
+  shareFile(data, 'عقاراتي-'+name+'.json');
+}
+
+function bkShareOne(id){
+  var snap = bkLoad().find(function(x){ return x.id===id; }); if(!snap) return;
+  shareFile(snap.data, 'عقاراتي-'+snap.label.replace(/[\/\\:*?"<>|]/g,'-')+'.json');
+}
+
+function sheetsSave(){
+  var url=val('sheets-url');if(!url){toast('⚠️ أدخل رابط Google Sheets أولاً');return;}
+  localStorage.setItem('aq_sheets_url',url);toast('⏳ جاري الرفع...');
+  var data={props:DB.props,owners:DB.owners,requests:DB.requests,timestamp:new Date().toISOString()};
+  fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+    .then(function(r){if(r.ok)toast('✅ تم الرفع بنجاح');else toast('⚠️ فشل الرفع');})
+    .catch(function(){toast('⚠️ فشل الاتصال');});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  load();initImgs();
+  var su=localStorage.getItem('aq_sheets_url');if(su)setv('sheets-url',su);
+  document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('on');});});
+  renderProps();renderOwners();renderRequests();
+});
+</script>
+</body>
+</html>
